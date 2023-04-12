@@ -6,6 +6,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UpdateUserRequest;
+use App\Http\Requests\StoreUserRequest;
 
 class UserController extends Controller
 {
@@ -29,13 +30,14 @@ class UserController extends Controller
      */
     public function create(User $user)
     {
+
         return view('superadmin.create', ['user'=>$user]);
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(UpdateUserRequest $request)
+    public function store(StoreUserRequest $request)
     {
         $input= $request->validated();
         $input['password']=bcrypt($input['password']);
@@ -69,8 +71,12 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request, User $user)
     {
-        $input= $request->validated();
-        $input['password']=bcrypt($input['password']);
+        $input=$request->validated();
+        if($input['password']==null){
+            unset($input['password']);
+        }else{
+            $input['password']=bcrypt($input['password']);
+        }
         User::query()->where('id', $user->id)->update($input);
 
         return redirect('/dashboard');
