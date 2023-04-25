@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Friends;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -19,9 +20,14 @@ class UserController extends Controller
         $this->users=DB::table('users')->where('super_admin', false)->get();
     }
 
-    public function index()
+    public function index(Friends $friends)
     {
-        $users = DB::table('users')->where('super_admin', false)->paginate(2);
+        if(auth()->user()->super_admin== false){
+            $users= DB::table('users')->where([['super_admin', false],['id','!=', auth()->user()->id])->get();
+
+        }else{
+            $users = DB::table('users')->where('super_admin', false)->paginate(2);
+        }
         return view('dashboard', ['users'=>$users]);
     }
 

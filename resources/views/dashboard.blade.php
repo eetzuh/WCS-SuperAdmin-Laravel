@@ -47,7 +47,22 @@
                             {{$users->links()}}
                         </div>
                     @else
-                        Welcome!
+                                <table class="table table-hover table-responsive mt-3">
+                                    <thead>
+                                    <th>Users</th>
+                                    <th></th>
+                                    </thead>
+                                    <tbody>
+                                    @if($users->count()==0)
+                                </table>
+                                <p class="text-danger">No data</p>
+                            @endif
+                            @foreach($users as $user)
+                                <tr class="col align-middle">
+                                    <td>{{$user->name}}</td>
+                                   <td><form><button class="btn btn-outline-success">Add friend</button></form></td>
+                                </tr>
+                            @endforeach
                     @endif
                 </div>
             </div>

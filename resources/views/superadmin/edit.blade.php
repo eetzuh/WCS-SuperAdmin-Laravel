@@ -20,7 +20,7 @@
                         <div>
                             <label for="username" class="form-label fw-medium">Username</label>
                             <div class="col-4 mb-2">
-                                <input type="text" name="name" class="form-control" value="{{$user->name}}">
+                                <input type="text" name="name" class="form-control" value="{{old('name', $user->name)}}">
                                 @error('name')
                                 <p class="text-danger">{{ $message }}</p>
                                 @enderror
