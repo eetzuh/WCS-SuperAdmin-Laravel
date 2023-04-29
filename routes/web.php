@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminAccess;
@@ -30,6 +31,7 @@ Route::middleware([AdminAccess::class, 'auth'])->group(function (){
     Route::delete('/dashboard/{user}', [UserController::class, 'destroy'])->name('superadmin.destroy');
 });
 
+Route::get('/user/friends', [FriendsController::class, 'index'])->name('friends.index');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

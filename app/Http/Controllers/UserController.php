@@ -20,11 +20,15 @@ class UserController extends Controller
         $this->users=DB::table('users')->where('super_admin', false)->get();
     }
 
-    public function index(Friends $friends)
+    public function index(User $user)
     {
         if(auth()->user()->super_admin== false){
-            $users= DB::table('users')->where([['super_admin', false],['id','!=', auth()->user()->id])->get();
-
+            $notInFriends = DB::table('friends')->select('friend_id')
+                ->where( 'status', true);
+            $notInUsers= DB::table('friends')->select('user_id')
+                ->where( 'status', true);
+            $users= $user->with('friends')->where([['super_admin', false],['id','!=', auth()->user()->id]])
+                ->whereNotIn('id', $notInFriends)->whereNotIn('id', $notInUsers)->get();
         }else{
             $users = DB::table('users')->where('super_admin', false)->paginate(2);
         }

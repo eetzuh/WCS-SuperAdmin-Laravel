@@ -1,9 +1,10 @@
+{{--@php use function PHPUnit\Framework\isEmpty; @endphp--}}
 @php use function PHPUnit\Framework\isEmpty; @endphp
 <x-app-layout>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight";
-            {{ __('Dashboard') }}
+{{--            {{ __('Dashboard') }}--}}
         </h2>
     </x-slot>
 
@@ -51,16 +52,26 @@
                                     <thead>
                                     <th>Users</th>
                                     <th></th>
+                                    <th></th>
                                     </thead>
                                     <tbody>
-                                    @if($users->count()==0)
+                                    @if($users->count()==0 )
                                 </table>
                                 <p class="text-danger">No data</p>
                             @endif
                             @foreach($users as $user)
                                 <tr class="col align-middle">
                                     <td>{{$user->name}}</td>
-                                   <td><form><button class="btn btn-outline-success">Add friend</button></form></td>
+                                @if($user->friendsTo->count()!= 0)
+
+                                        <td><form action=""><button class="btn btn-outline-warning">Requested</button></form></td>
+                                    @elseif($user->friendsFrom->count()!= 0)
+                                    <td><form action=""><button class="btn btn-outline-success">Accept</button></form>
+                                    <form action=""><button class="btn btn-outline-danger">Deny</button></form>
+                                    </td>
+                                    @else
+                                        <td><form action=""><button class="btn btn-outline-success">Add friend</button></form></td>
+                                    @endif
                                 </tr>
                             @endforeach
                     @endif

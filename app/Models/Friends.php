@@ -13,10 +13,11 @@ class Friends extends Model
     protected $fillable = [
         'user_id',
         'friend_id',
+        'status',
     ];
 
     public function users():BelongsToMany
     {
-        return $this->belongsToMany(User::class);
+        return $this->belongsToMany(User::class, 'users');
     }
 }
