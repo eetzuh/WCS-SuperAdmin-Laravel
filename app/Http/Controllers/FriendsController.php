@@ -6,16 +6,17 @@ use App\Models\Friends;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Models\User;
+use App\Traits\friendsTrait;
 
 class FriendsController extends Controller
 {
+    use friendsTrait;
     /**
      * Display a listing of the resource.
      */
     public function index(User $user)
     {
-        $friends1=auth()->user()->friendsFromAccepted;
-        $friends=auth()->user()->friendsWithAccepted->merge($friends1)->sort();
+        $friends= $this->allFriends();
         return view('friends.index', ['friends'=>$friends]);
     }
 
@@ -24,17 +25,18 @@ class FriendsController extends Controller
      */
     public function create()
     {
-        //
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
+    public function store(Request $request, Friends $friends)
     {
-        //
+        $friends->user_id= auth()->user()->id;
+        $friends->friend_id=$request->friendId;
+        $friends->save();
+        return redirect()->route('dashboard');
     }
-
     /**
      * Display the specified resource.
      */
@@ -46,24 +48,33 @@ class FriendsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        //
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        DB::table('friends')->where([['user_id', $request->userId], ['friend_id', auth()->user()->id]])->update(['status'=> true]);
+        return redirect()->route('dashboard');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function undoRequest(Request $request)
     {
-        //
+        DB::table('friends')->where([['user_id', auth()->user()->id], ['friend_id', $request->friendId]])->delete();
+        return redirect()->route('dashboard');
     }
+    public function denyRequest(Request $request)
+    {
+       $friends= DB::table('friends')->where([['user_id', $request->userId], ['friend_id', auth()->user()->id]])->delete();
+       dd($friends);
+        return redirect()->route('dashboard');
+
+    }
+
 }

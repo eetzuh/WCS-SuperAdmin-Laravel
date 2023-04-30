@@ -4,6 +4,7 @@ use App\Http\Controllers\FriendsController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminAccess;
+use App\Models\Friends;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,6 +33,11 @@ Route::middleware([AdminAccess::class, 'auth'])->group(function (){
 });
 
 Route::get('/user/friends', [FriendsController::class, 'index'])->name('friends.index');
+Route::post('/dashboard/friends', [FriendsController::class, 'store'])->name('friends.store');
+Route::put('/dashboard/update', [FriendsController::class, 'update'])->name('friends.update');
+Route::delete('/dashboard', [FriendsController::class, 'undoRequest'])->name('friends.destroy');
+Route::delete('/dashboard/deny', [FriendsController::class, 'denyRequest'])->name('friends.deny');
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

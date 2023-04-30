@@ -8,13 +8,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Http\Requests\UpdateUserRequest;
 use App\Http\Requests\StoreUserRequest;
+use App\Traits\friendsTrait;
+
 
 class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-//    public $users;
+    use friendsTrait;
 
     public function __construct(){
         $this->users=DB::table('users')->where('super_admin', false)->get();
@@ -23,12 +25,9 @@ class UserController extends Controller
     public function index(User $user)
     {
         if(auth()->user()->super_admin== false){
-            $notInFriends = DB::table('friends')->select('friend_id')
-                ->where( 'status', true);
-            $notInUsers= DB::table('friends')->select('user_id')
-                ->where( 'status', true);
-            $users= $user->with('friends')->where([['super_admin', false],['id','!=', auth()->user()->id]])
-                ->whereNotIn('id', $notInFriends)->whereNotIn('id', $notInUsers)->get();
+            $friends=$this->allFriends()->pluck('id');
+           $users= $user->where([['super_admin', false],['id','!=', auth()->user()->id]])
+               ->whereNotIn('id', $friends)->paginate(2);
         }else{
             $users = DB::table('users')->where('super_admin', false)->paginate(2);
         }
@@ -89,7 +88,7 @@ class UserController extends Controller
         }
         User::query()->where('id', $user->id)->update($input);
 
-        return redirect('/dashboard');
+        return back();
     }
 
     /**

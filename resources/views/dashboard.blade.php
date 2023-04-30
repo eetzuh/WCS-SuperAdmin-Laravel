@@ -59,21 +59,44 @@
                                 </table>
                                 <p class="text-danger">No data</p>
                             @endif
+
                             @foreach($users as $user)
                                 <tr class="col align-middle">
                                     <td>{{$user->name}}</td>
                                 @if($user->friendsTo->count()!= 0)
-
-                                        <td><form action=""><button class="btn btn-outline-warning">Requested</button></form></td>
+                                        <td><form action="{{route('friends.destroy')}}" method="post">
+                                                @csrf
+                                                @method('DELETE')
+                                                <input type="hidden" value="{{$user->id}}" name="friendId">
+                                                <button class="btn btn-outline-warning">Requested</button>
+                                            </form></td>
                                     @elseif($user->friendsFrom->count()!= 0)
-                                    <td><form action=""><button class="btn btn-outline-success">Accept</button></form>
-                                    <form action=""><button class="btn btn-outline-danger">Deny</button></form>
+                                    <td><form action="{{route('friends.update')}}" method="post">
+                                            @csrf
+                                            @method('PUT')
+                                            <input type="hidden" name="userId" value="{{$user->id}}">
+                                            <button class="btn btn-outline-success">Accept</button>
+                                        </form>
+                                        <form action="{{route('friends.deny')}}" method="post">
+                                            @csrf
+                                            @method('DELETE')
+                                            <input type="hidden" value="{{$user->id}}" name="userId">
+                                            <button class="btn btn-outline-danger">Deny</button>
+                                        </form>
+                                    </td>
                                     </td>
                                     @else
-                                        <td><form action=""><button class="btn btn-outline-success">Add friend</button></form></td>
+                                        <td><form action="{{route('friends.store')}}" method="post">
+                                                @csrf
+                                                <input type="hidden" name="friendId" value="{{$user->id}}">
+                                                <button class="btn btn-outline-success">Add friend</button>
+                                            </form></td>
                                     @endif
                                 </tr>
                             @endforeach
+                            <div>
+                                {{$users->links()}}
+                            </div>
                     @endif
                 </div>
             </div>

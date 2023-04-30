@@ -28,7 +28,12 @@
                             <tr class="col align-middle">
                                 <td>{{$friend->name}}</td>
                                 <td><form action=""><button class="btn btn-outline-success">Message</button></form>
-                                    <form action=""><button class="btn btn-outline-danger">Delete</button></form>
+{{--                                    <form action="{{route('friends.remove', $friend->id)}}" method="post">--}}
+{{--                                        @csrf--}}
+{{--                                        @method('DELETE')--}}
+{{--                                        <input type="hidden" name="friendId" value="{{$friend->id}}">--}}
+{{--                                        <button class="btn btn-outline-danger">Delete</button>--}}
+{{--                                    </form>--}}
                                 </td>
                             </tr>
                         @endforeach

@@ -47,12 +47,12 @@ class User extends Authenticatable
     public function friendsFrom()
     {
         return $this->belongsToMany(User::class, 'friends','user_id', 'friend_id')->withPivot('status')
-            ->wherePivot('friend_id', auth()->user()->id);
+            ->wherePivot('status', false)->wherePivot('friend_id', auth()->user()->id);
     }
     public function friendsTo()
     {
         return $this->belongsToMany(User::class, 'friends','friend_id', 'user_id')->withPivot('status')
-            ->wherePivot('status', false);
+            ->wherePivot('status', false)->wherePivot('user_id', auth()->user()->id);
     }
 
     public function friends()
