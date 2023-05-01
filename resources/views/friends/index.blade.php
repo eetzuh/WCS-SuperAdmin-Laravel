@@ -4,7 +4,7 @@
 <x-app-layout>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight";
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight";>
         {{--            {{ __('Dashboard') }}--}}
         </h2>
     </x-slot>
@@ -27,7 +27,10 @@
                         @foreach($friends as $friend)
                             <tr class="col align-middle">
                                 <td>{{$friend->name}}</td>
-                                <td><form action=""><button class="btn btn-outline-success">Message</button></form>
+                                <td><form action="{{route('chats.index')}}" method="get">
+                                        <input type="hidden" name="friendId" value="{{$friend->id}}" >
+                                        <button class="btn btn-outline-success">Message</button>
+                                    </form>
 {{--                                    <form action="{{route('friends.remove', $friend->id)}}" method="post">--}}
 {{--                                        @csrf--}}
 {{--                                        @method('DELETE')--}}

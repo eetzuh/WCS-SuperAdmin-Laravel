@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FriendsController;
+use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminAccess;
@@ -37,6 +38,8 @@ Route::post('/dashboard/friends', [FriendsController::class, 'store'])->name('fr
 Route::put('/dashboard/update', [FriendsController::class, 'update'])->name('friends.update');
 Route::delete('/dashboard', [FriendsController::class, 'undoRequest'])->name('friends.destroy');
 Route::delete('/dashboard/deny', [FriendsController::class, 'denyRequest'])->name('friends.deny');
+Route::get('/user/friends/chat', [MessagesController::class, 'index'])->name('chats.index');
+Route::post('/user/friends/chat/send', [MessagesController::class, 'sendMessage'])->name('chats.send');
 
 
 Route::middleware('auth')->group(function () {
