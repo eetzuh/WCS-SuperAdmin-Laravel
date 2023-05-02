@@ -36,10 +36,11 @@ Route::middleware([AdminAccess::class, 'auth'])->group(function (){
 Route::get('/user/friends', [FriendsController::class, 'index'])->name('friends.index');
 Route::post('/dashboard/friends', [FriendsController::class, 'store'])->name('friends.store');
 Route::put('/dashboard/update', [FriendsController::class, 'update'])->name('friends.update');
-Route::delete('/dashboard', [FriendsController::class, 'undoRequest'])->name('friends.destroy');
-Route::delete('/dashboard/deny', [FriendsController::class, 'denyRequest'])->name('friends.deny');
+Route::delete('/dashboard', [FriendsController::class, 'updateRequest'])->name('friends.destroy');
+//Route::delete('/dashboard/deny', [FriendsController::class, 'denyRequest'])->name('friends.deny');
 Route::get('/user/friends/chat', [MessagesController::class, 'index'])->name('chats.index');
 Route::post('/user/friends/chat/send', [MessagesController::class, 'sendMessage'])->name('chats.send');
+Route::delete('user/friends', [FriendsController::class, 'removeFriend'])->name('friends.remove');
 
 
 Route::middleware('auth')->group(function () {

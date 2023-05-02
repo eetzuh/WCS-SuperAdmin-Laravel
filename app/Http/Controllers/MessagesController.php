@@ -10,13 +10,14 @@ use Illuminate\Support\Facades\DB;
 
 class MessagesController extends Controller
 {
-    public function index(Frigends $friends, Request $request, Chats $chats)
+    public function index(Friends $friends, Request $request, Chats $chats)
     {
         $friend= DB::table('users')->where('id', $request->friendId)->first();
         $chat= $friends->where([['user_id', $request->friendId], ['friend_id', auth()->user()->id]])
             ->orWhere([['friend_id', $request->friendId], ['user_id', auth()->user()->id]])->first();
-        $test= $chats->where('participants', $chat->id)->get();
-        return view('chats.index', ['chat'=>$chat, 'friend'=>$friend, 'test'=>$test]);
+        $messageId= $chats->select('message_id')->where('participants', $chat->id)->get();
+        $messages= DB::table('messages')->whereIn('id', $messageId)->get();
+        return view('chats.index', ['chat'=>$chat, 'friend'=>$friend, 'messages'=>$messages]);
     }
     public function sendMessage(Messages $message, Chats $chat, Request $request)
     {

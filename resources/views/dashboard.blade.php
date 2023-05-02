@@ -77,7 +77,7 @@
                                             <input type="hidden" name="userId" value="{{$user->id}}">
                                             <button class="btn btn-outline-success">Accept</button>
                                         </form>
-                                        <form action="{{route('friends.deny')}}" method="post">
+                                        <form action="{{route('friends.destroy')}}" method="post">
                                             @csrf
                                             @method('DELETE')
                                             <input type="hidden" value="{{$user->id}}" name="userId">

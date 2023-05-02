@@ -64,17 +64,26 @@ class FriendsController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function undoRequest(Request $request)
+    public function updateRequest(Request $request)
     {
-        DB::table('friends')->where([['user_id', auth()->user()->id], ['friend_id', $request->friendId]])->delete();
+        if($request->friendId){
+            DB::table('friends')->where([['user_id', auth()->user()->id], ['friend_id', $request->friendId]])->delete();
+        }else{
+           DB::table('friends')->where([['user_id', $request->userId], ['friend_id', auth()->user()->id]])->delete();
+        }
         return redirect()->route('dashboard');
     }
-    public function denyRequest(Request $request)
+//    public function denyRequest(Request $request)
+//    {
+//       $friends= DB::table('friends')->where([['user_id', $request->userId], ['friend_id', auth()->user()->id]])->delete();
+//       dd($friends);
+//        return redirect()->route('dashboard');
+//    }
+    public function removeFriend(Request $request, Friends $friends)
     {
-       $friends= DB::table('friends')->where([['user_id', $request->userId], ['friend_id', auth()->user()->id]])->delete();
-       dd($friends);
-        return redirect()->route('dashboard');
-
+        $friends->where([['user_id', $request->friendId], ['friend_id', auth()->user()->id]])
+            ->orWhere([['friend_id', $request->friendId], ['user_id', auth()->user()->id]])->delete();
+        return back();
     }
 
 }

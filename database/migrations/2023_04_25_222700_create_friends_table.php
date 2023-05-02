@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('friends', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('user_id')->constrained('users', 'id');
-            $table->foreignId('friend_id')->constrained('users', 'id');
+            $table->id()->onDelete('cascade');
+            $table->foreignId('user_id')->constrained('users', 'id')->onDelete('cascade');
+            $table->foreignId('friend_id')->constrained('users', 'id')->onDelete('cascade');
             $table->boolean('status')->default(false);
             $table->timestamps();
         });

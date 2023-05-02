@@ -20,50 +20,25 @@
     <div class="mt-1">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
-                <div class="p-6 text-gray-900 font-semibold" style="height: 43rem; overflow-y: scroll;">
-                 <pre>
-                     @foreach($test as $message)
-                         {{$message->sentMessages}}
+                <div class="p-6 text-gray-900 scroll">
+                     @foreach($messages as $message)
+                         @if($message->sender_id == $friend->id)
+                             <div class="d-flex justify-content-start align-items-center mb-2">
+                                 <img src="{{ asset('storage/images/avatar.jpg')}}" class="avatarFriend">
+                                 <p class="messageFriend">
+                                     {{$message->message}}
+                                 </p>
+                             </div>
+                         @else
+                             <div class="d-flex justify-content-end text-white mb-2">
+                             <p class="messageUser">
+                                 {{$message->message}}
+                             </p>
+                                 <img src="{{ asset('storage/images/avatar.jpg')}}" class="avatarUser">
+                             </div>
+                         @endif
                      @endforeach
-                     asd
-                     as
-                     da
-                     dsa
-                     d
-                     ad
-                     as
 
-                     as
-                     d
-                     asd
-                     asd
-                     as
-                     das
-                     d
-                     asd
-                     asd
-                     sa
-                     da
-                     sd
-                     asd
-                     a
-                     as
-                     d
-                     asd
-                     ad
-                     sad
-                     a
-                     das
-                     dsa
-                     da
-                     d
-                     ad
-                     ad
-                     sa
-                     sa
-                     dsa
-                     d
-                 </pre>
                 </div>
             </div>
         </div>
@@ -76,7 +51,7 @@
                             @csrf
                             <input type="hidden" name="chatId" value="{{$chat->id}}">
                             <input type="hidden" name="friendId" value="{{auth()->user()->id}}">
-                            <input style="width: 95%" type="text" name="message" maxlength = "300">
+                            <input style="width: 95%; border: none; padding-left:" type="text" name="message" maxlength = "300">
                             <button style="width: 5%"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-send" viewBox="0 0 16 16">
                                     <path d="M15.854.146a.5.5 0 0 1 .11.54l-5.819 14.547a.75.75 0 0 1-1.329.124l-3.178-4.995L.643 7.184a.75.75 0 0 1 .124-1.33L15.314.037a.5.5 0 0 1 .54.11ZM6.636 10.07l2.761 4.338L14.13 2.576 6.636 10.07Zm6.787-8.201L1.591 6.602l4.339 2.76 7.494-7.493Z"/>
                                 </svg></button>
