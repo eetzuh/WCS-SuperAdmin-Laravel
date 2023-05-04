@@ -3,7 +3,7 @@
 <x-app-layout>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KK94CHFLLe+nY2dmCWGMq91rCGa5gtU4mk92HdvYe+M/SXH301p5ILy+dN9+nJOZ" crossorigin="anonymous">
     <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 leading-tight";
+        <h2 class="font-semibold text-xl text-gray-800 leading-tight";>
 {{--            {{ __('Dashboard') }}--}}
         </h2>
     </x-slot>
@@ -52,11 +52,9 @@
                                     <thead>
                                     <th>Users</th>
                                     <th></th>
-                                    <th></th>
                                     </thead>
                                     <tbody>
                                     @if($users->count()==0 )
-                                </table>
                                 <p class="text-danger">No data</p>
                             @endif
 
@@ -71,7 +69,7 @@
                                                 <button class="btn btn-outline-warning">Requested</button>
                                             </form></td>
                                     @elseif($user->friendsFrom->count()!= 0)
-                                    <td><form action="{{route('friends.update')}}" method="post">
+                                    <td class="d-flex"><form action="{{route('friends.update')}}" method="post" class="me-3">
                                             @csrf
                                             @method('PUT')
                                             <input type="hidden" name="userId" value="{{$user->id}}">
@@ -94,10 +92,12 @@
                                     @endif
                                 </tr>
                             @endforeach
-                            <div>
-                                {{$users->links()}}
-                            </div>
-                    @endif
+                                    </tbody>
+                                </table>
+                                <div>
+                                    {{$users->links()}}
+                                </div>
+                            @endif
                 </div>
             </div>
         </div>

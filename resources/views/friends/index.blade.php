@@ -27,7 +27,7 @@
                         @foreach($friends as $friend)
                             <tr class="col align-middle">
                                 <td>{{$friend->name}}</td>
-                                <td><form action="{{route('chats.index')}}" method="get">
+                                <td class="d-flex"><form action="{{route('chats.index')}}" method="get" class="me-3">
                                         <input type="hidden" name="friendId" value="{{$friend->id}}" >
                                         <button class="btn btn-outline-success">Message</button>
                                     </form>
@@ -35,7 +35,7 @@
                                         @csrf
                                         @method('DELETE')
                                         <input type="hidden" name="friendId" value="{{$friend->id}}">
-                                        <button class="btn btn-outline-danger">Delete</button>
+                                        <button class="btn btn-outline-danger">Remove</button>
                                     </form>
                                 </td>
                             </tr>

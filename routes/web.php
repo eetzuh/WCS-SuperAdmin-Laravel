@@ -5,6 +5,7 @@ use App\Http\Controllers\MessagesController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Middleware\AdminAccess;
+use App\Http\Middleware\UserAccess;
 use App\Models\Friends;
 use Illuminate\Support\Facades\Route;
 
@@ -33,15 +34,15 @@ Route::middleware([AdminAccess::class, 'auth'])->group(function (){
     Route::delete('/dashboard/{user}', [UserController::class, 'destroy'])->name('superadmin.destroy');
 });
 
-Route::get('/user/friends', [FriendsController::class, 'index'])->name('friends.index');
-Route::post('/dashboard/friends', [FriendsController::class, 'store'])->name('friends.store');
-Route::put('/dashboard/update', [FriendsController::class, 'update'])->name('friends.update');
-Route::delete('/dashboard', [FriendsController::class, 'updateRequest'])->name('friends.destroy');
-//Route::delete('/dashboard/deny', [FriendsController::class, 'denyRequest'])->name('friends.deny');
-Route::get('/user/friends/chat', [MessagesController::class, 'index'])->name('chats.index');
-Route::post('/user/friends/chat/send', [MessagesController::class, 'sendMessage'])->name('chats.send');
-Route::delete('user/friends', [FriendsController::class, 'removeFriend'])->name('friends.remove');
-
+Route::middleware([UserAccess::class, 'auth'])->group(function(){
+    Route::get('/user/friends', [FriendsController::class, 'index'])->name('friends.index');
+    Route::post('/user/friends', [FriendsController::class, 'store'])->name('friends.store');
+    Route::put('/user/update', [FriendsController::class, 'update'])->name('friends.update');
+    Route::delete('/dashboard', [FriendsController::class, 'updateRequest'])->name('friends.destroy');
+    Route::get('/user/friends/chat', [MessagesController::class, 'index'])->name('chats.index');
+    Route::post('/user/friends/chat/send', [MessagesController::class, 'sendMessage'])->name('chats.send');
+    Route::delete('user/friends', [FriendsController::class, 'removeFriend'])->name('friends.remove');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');

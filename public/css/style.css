@@ -2,13 +2,14 @@
     height: 43rem;
     overflow-y: scroll;
     overflow-x: hidden;
-    overflow-anchor: none;
+    overflow: auto;
 }
 .chatInput{
-    width: 95%;
+    border: none;
+    flex-grow: 1;
 }
 .send{
-   width: 5%;
+    width: 35px;
 }
 .avatarFriend{
     width: 3rem;
@@ -20,18 +21,38 @@
     height: 3rem;
     margin-left: 1rem;
 }
-.messageUser{
+.message{
     border-radius:20px;
     padding: 0.6rem;
-    background-color: #637baf;
     margin:0;
     word-break:break-all;
+    display: grid;
+    align-items: center;
+}
+.messageUser{
+    background-color: #637baf;
 }
 .messageFriend{
-    border-radius:20px;
-    padding: 0.6rem;
     background-color: #efefef;
-    margin:0;
-    text-align: center;
 }
+.messageDate{
+    text-align: center;
+    color: #6f7580;
+}
+.timeDiv .time{
+    color: white;
+    display: grid;
+    align-items: center;
+}
+.timeDiv:hover .time{
+    color: #6f7580;
+}
+.timeUser{
+    margin: 0px 10px 0px 0px;
+}
+.timeFriend{
+    margin: 0px 0px 0px 10px;
+}
+
+
 

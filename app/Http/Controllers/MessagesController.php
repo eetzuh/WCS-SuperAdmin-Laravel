@@ -16,7 +16,11 @@ class MessagesController extends Controller
         $chat= $friends->where([['user_id', $request->friendId], ['friend_id', auth()->user()->id]])
             ->orWhere([['friend_id', $request->friendId], ['user_id', auth()->user()->id]])->first();
         $messageId= $chats->select('message_id')->where('participants', $chat->id)->get();
-        $messages= DB::table('messages')->whereIn('id', $messageId)->get();
+        $messages= DB::table('messages')->whereIn('id', $messageId)->get()->groupBy(function($query){
+                return substr($query->created_at,0, 10);
+            });
+
+//        dd($date);
         return view('chats.index', ['chat'=>$chat, 'friend'=>$friend, 'messages'=>$messages]);
     }
     public function sendMessage(Messages $message, Chats $chat, Request $request)

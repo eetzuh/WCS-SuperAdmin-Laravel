@@ -73,12 +73,7 @@ class FriendsController extends Controller
         }
         return redirect()->route('dashboard');
     }
-//    public function denyRequest(Request $request)
-//    {
-//       $friends= DB::table('friends')->where([['user_id', $request->userId], ['friend_id', auth()->user()->id]])->delete();
-//       dd($friends);
-//        return redirect()->route('dashboard');
-//    }
+
     public function removeFriend(Request $request, Friends $friends)
     {
         $friends->where([['user_id', $request->friendId], ['friend_id', auth()->user()->id]])
