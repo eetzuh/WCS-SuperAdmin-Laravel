@@ -19,8 +19,6 @@ class MessagesController extends Controller
         $messages= DB::table('messages')->whereIn('id', $messageId)->get()->groupBy(function($query){
                 return substr($query->created_at,0, 10);
             });
-
-//        dd($date);
         return view('chats.index', ['chat'=>$chat, 'friend'=>$friend, 'messages'=>$messages]);
     }
     public function sendMessage(Messages $message, Chats $chat, Request $request)

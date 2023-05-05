@@ -36,8 +36,8 @@ Route::middleware([AdminAccess::class, 'auth'])->group(function (){
 
 Route::middleware([UserAccess::class, 'auth'])->group(function(){
     Route::get('/user/friends', [FriendsController::class, 'index'])->name('friends.index');
-    Route::post('/user/friends', [FriendsController::class, 'store'])->name('friends.store');
-    Route::put('/user/update', [FriendsController::class, 'update'])->name('friends.update');
+    Route::post('/user/friends/store', [FriendsController::class, 'store'])->name('friends.store');
+    Route::put('/user/friends/update', [FriendsController::class, 'update'])->name('friends.update');
     Route::delete('/dashboard', [FriendsController::class, 'updateRequest'])->name('friends.destroy');
     Route::get('/user/friends/chat', [MessagesController::class, 'index'])->name('chats.index');
     Route::post('/user/friends/chat/send', [MessagesController::class, 'sendMessage'])->name('chats.send');

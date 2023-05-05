@@ -30,7 +30,7 @@
                         @endif
                          @foreach($message as $text)
                          @if($text->sender_id == $friend->id)
-                             <div class="d-flex justify-content-start align-items-center mb-2 timeDiv">
+                             <div class="d-flex justify-content-start mb-2 timeDiv">
                                  <img src="{{ asset('storage/images/avatar.jpg')}}" class="avatarFriend">
                                  <p class="messageFriend message">
                                      {{$text->message}}

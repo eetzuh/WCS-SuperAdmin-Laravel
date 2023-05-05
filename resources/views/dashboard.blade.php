@@ -54,10 +54,6 @@
                                     <th></th>
                                     </thead>
                                     <tbody>
-                                    @if($users->count()==0 )
-                                <p class="text-danger">No data</p>
-                            @endif
-
                             @foreach($users as $user)
                                 <tr class="col align-middle">
                                     <td>{{$user->name}}</td>
@@ -93,10 +89,14 @@
                                 </tr>
                             @endforeach
                                     </tbody>
+
                                 </table>
                                 <div>
                                     {{$users->links()}}
                                 </div>
+                            @endif
+                            @if($users->count()==0 )
+                                <p class="text-danger">No users found</p>
                             @endif
                 </div>
             </div>

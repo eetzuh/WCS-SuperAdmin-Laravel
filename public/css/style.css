@@ -28,6 +28,7 @@
     word-break:break-all;
     display: grid;
     align-items: center;
+    max-width: 60%;
 }
 .messageUser{
     background-color: #637baf;
